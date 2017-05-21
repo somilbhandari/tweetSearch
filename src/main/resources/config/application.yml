@@ -1,0 +1,83 @@
+# Disable the spring security default configuration from spring-boot-actuator
+management.security.enabled: true
+security.basic.enabled: false
+
+# Disable Jolokia - An http/json bridge for remote JMX access
+endpoints.jolokia.enabled: false
+
+# Set domain name and unique names for jmx
+endpoints.jmx.domain: twtsearch
+endpoints.jmx.uniqueNames: true
+
+# security configuration (this key should be unique for your application, and kept secret)
+jhipster.security.rememberme.key: b05415b0d078091d3f7cbb0a831ae6281dfe48bd
+
+async:
+    corePoolSize: 2
+    maxPoolSize: 50
+    queueCapacity: 10000
+    
+encryption: 
+    key: frBkEvkretGSDRrfreHtRTbrtBtbtbtbR
+    
+server:  
+  port: 8080
+  
+spring:
+    profiles:
+        active: dev
+    datasource:
+        dataSourceClassName: org.postgresql.ds.PGSimpleDataSource
+        url: 
+        databaseName: twtsearch
+        serverName: localhost
+        username: postgres
+        password: 123456
+    jpa:
+        database-platform: com.twtsearch.domain.util.FixedPostgreSQL82Dialect
+        database: POSTGRESQL
+        openInView: true
+        open-in-view: true
+        show_sql: false
+        generate-ddl: false
+        hibernate:
+            ddl-auto: none
+            naming-strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
+        properties:
+            hibernate.cache.use_second_level_cache: true
+            hibernate.cache.use_query_cache: false
+            hibernate.generate_statistics: false
+            hibernate.cache.region.factory_class: org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory
+
+metrics:
+    jmx.enabled: true
+    spark:
+        enabled: false
+        host: localhost
+        port: 9999
+    graphite:
+        enabled: false
+        host: localhost
+        port: 2003
+        prefix: wowperks
+
+cache:
+    timeToLiveSeconds: 3600
+    ehcache:
+        maxBytesLocalHeap: 16M
+
+token.generator:
+  use.fixed: true
+  fixed.value: 123456
+        
+flyway:
+    validateOnMigrate: false
+    placeholders:
+        spring:
+            datasource:
+                username: postgres
+                
+twitter:
+  host: https://api.twitter.com/oauth2/token
+  apikey: 2PMOBbVnVebKiY7fQS69Nn5RM
+  apisecret: IZXv1NC2W8ZPmnmrqINIrz46CfUh4gHt2QRmsKERsxiMeCw2Oy

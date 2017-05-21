@@ -1,0 +1,92 @@
+<html>
+	<head>
+		<link href="css/style.css" rel="stylesheet" />
+		<link href="css/bootstrap.min.css" rel="stylesheet" />
+	</head>
+	<body>
+		<h1 class="title">Tweet Search</h1>
+		<input class="searchBox col-sm-offset-4 col-sm-4" id="search" type="text"></input>
+
+		<div class="tweets col-sm-offset-2 col-sm-8">
+			<h3>Search results</h3>	
+			<div id="t">
+			</div>
+		</div>
+	
+	</body>
+	
+	<script src='js/jquery-3.0.0.min.js'></script>
+	<script>
+	
+	var searchRequest, update= false;
+	var maxId = 0;
+
+	$(document).ready(function(){
+		$('#search').focus();
+	});
+	
+	$("#search").keypress(function(e) 
+	{
+		update = false;
+    	$(".tweets").fadeOut();
+    	$("#t").empty();
+		if(e.which === 32) 
+			return false;
+	    if(e.keyCode == 13) 
+	    {
+	    	maxId = 0;
+	    	var str = $("#search").val();
+	    	update = true;
+	    	search(str);
+	    	$(".tweets").fadeIn();
+	    }
+	});
+	
+	function search(str)
+	{
+		searchRequest = $.ajax({
+			url: 'hashsearch/' + str + '/' + maxId,
+			type: 'POST',
+			success: function(data)
+			{
+	//			console.log(data);
+				if( data.length > 0)
+					displayTweetsAndUpdateMaxId(data);
+				console.log("Max Id : " + maxId);
+			},
+			complete: function()
+			{
+				if(update == true)
+				{	
+					setTimeout( function() {search(str, maxId)} ,  3000);
+				}
+			}
+		})
+	}
+
+	function displayTweetsAndUpdateMaxId(data)
+	{
+		var i;
+		var divHtml = "";
+		var max = maxId;
+		console.log(data);
+		for(i=0; i<data.length; i++)
+		{
+			if(data[i].id <= maxId) continue;
+			divHtml += '<div class="td" id="'+data[i].id+'">';
+			divHtml += '<img class="tdImage" src='+data[i].profileImageUrl+' width=50></img>';
+			divHtml += '<span class="tdName">'+data[i].userName+'</span>';
+			divHtml += '<div class="tdText">'+data[i].text+'</div>';
+			divHtml += '</div>';
+			if( data[i].id > max)
+				max = data[i].id;
+			
+			console.log("data[" + i + "] : " + data[i].id + ", Max : " + max);
+		}
+		$('#t').prepend(divHtml);
+		
+		console.log("New max : " + max);
+		maxId = max;
+	}
+	</script>
+</html>

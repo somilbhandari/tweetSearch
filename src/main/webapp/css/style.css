@@ -1,0 +1,49 @@
+.title
+{
+	margin: 50 auto 30 auto;
+	text-align: center;
+}
+
+.searchBox
+{
+	margin: 0 auto;
+	padding: 10px;
+	border: solid 2px #dcdcdc;
+	transition: box-shadow 0.3s, border 0.3s;
+}
+
+.searchBox:focus,
+.searchBox.focus 
+{
+	border: solid 1px #707070;
+	box-shadow: 0 0 5px 1px #969696;
+}
+
+.tweets
+{
+	margin-top: 50px;
+	border: solid 1px #DCDCDC;
+	display: none;
+}
+
+.td
+{
+	box-shadow: 2px 2px 5px 1px LIGHTGRAY;
+	margin: 10px;
+}
+
+.tdImage
+{
+	margin: 3px;
+}
+
+.tdName
+{
+	font-weight: bold;
+	margin: auto 5px;
+}
+
+.tdText
+{
+	margin: 2px 2px;
+}
