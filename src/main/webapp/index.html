@@ -30,6 +30,11 @@
 		update = false;
     	$(".tweets").fadeOut();
     	$("#t").empty();
+    	if(searchRequest)
+    	{
+    		searchRequest.abort();
+    	}
+    	
 		if(e.which === 32) 
 			return false;
 	    if(e.keyCode == 13) 
@@ -58,7 +63,7 @@
 			{
 				if(update == true)
 				{	
-					setTimeout( function() {search(str, maxId)} ,  3000);
+					setTimeout( function() {search(str, maxId)} ,  1000);
 				}
 			}
 		})
